@@ -7,7 +7,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/labstack/gommon/log"
+	log "github.com/sirupsen/logrus"
 )
 
 type LifecycleToken struct {
