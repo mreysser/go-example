@@ -17,7 +17,7 @@ func main() {
 
 	go func() {
 		if err := e.StartServer(&http.Server{Addr: ":8080"}); err != nil && err != http.ErrServerClosed {
-			log.Errorf("server failed to start: %w", err)
+			log.Errorf("server failed to start: %s", err.Error())
 			token.TerminateLifecycle()
 		}
 	}()
