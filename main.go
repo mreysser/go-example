@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"net/http"
-	"syscall"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -27,7 +26,7 @@ func init() {
 }
 
 func main() {
-	token := lifecycle.InitializeLifecycle(context.Background(), []syscall.Signal{syscall.SIGTERM})
+	token := lifecycle.GetDefaultLifecycleToken()
 
 	e := echo.New()
 
@@ -38,9 +37,9 @@ func main() {
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 
 	go runServer(e)
-	token.RegisterShutdownHandler(func() { e.Shutdown(token.Ctx) })
+	token.RegisterShutdownHandler(func(ctx context.Context) { e.Shutdown(ctx) })
 
-	<-token.Ctx.Done()
+	<-token.GetContext().Done()
 	log.Warn("application exit")
 }
 
@@ -48,8 +47,6 @@ func runServer(e *echo.Echo) {
 	s := http.Server{
 		Addr: ":8080",
 	}
-
-	log.Debug("starting server")
 
 	err := e.StartServer(&s)
 	if err != nil && err != http.ErrServerClosed {
