@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/labstack/echo/v4 v4.10.2
+	github.com/mreysser/go-lifecycle v0.0.1
 	github.com/prometheus/client_golang v1.14.0
 	github.com/sirupsen/logrus v1.6.0
 )
