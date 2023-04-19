@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	lifecycle "github.com/mreysser/go-example/lifecycle"
+	lifecycle "github.com/mreysser/go-lifecycle"
 	log "github.com/sirupsen/logrus"
 )
 
