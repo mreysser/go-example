@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-example-test-registry
+  labels:
+    app: go-example-test-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-example-test-registry
+  template:
+    metadata:
+      labels:
+        app: go-example-test-registry
+    spec:
+      containers:
+      - name: go-example-test-registry
+        image: k3d-registry.localhost:8000/go-example:latest
+        ports:
+        - containerPort: 9001
+        

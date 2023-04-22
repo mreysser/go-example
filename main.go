@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -11,6 +12,7 @@ import (
 	"github.com/mreysser/go-lifecycle"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -27,12 +29,14 @@ func init() {
 	logr = logger.GetLoggerFromContextOrDefault(context.Background())
 	// TODO: import from env
 	logr.SetLevel(log.DebugLevel)
+	logr.SetOutput(os.Stdout)
 
 	// TODO: more metrics
 	prometheus.Register(totalHttpRequests)
 }
 
 func main() {
+	logrus.NewEntry(logr).Info("start")
 	token := lifecycle.GetDefaultLifecycleToken()
 
 	e := echo.New()
@@ -94,7 +98,7 @@ func main() {
 
 func runServer(e *echo.Echo) {
 	s := http.Server{
-		Addr: ":8080",
+		Addr: ":9001",
 	}
 
 	err := e.StartServer(&s)
