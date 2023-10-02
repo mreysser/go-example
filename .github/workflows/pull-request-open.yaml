@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Perform check build
-        run: make docker-build
+        run: cd ${{ github.repository.name }} && make docker-build
   
   run-tests:
     needs: checkout
