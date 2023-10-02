@@ -4,24 +4,22 @@ on:
     branches:
       - main
 jobs:
-  checkout:
+  check-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: "1"
-  
-  check-build:
-    needs: checkout
-    runs-on: ubuntu-latest
-    steps:
       - name: Perform check build
         run: make docker-build
   
   run-tests:
-    needs: checkout
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "1"
       - name: Run tests
         run: make test
