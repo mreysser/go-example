@@ -1,0 +1,25 @@
+name: Pull Request Checks
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "1"
+      - name: Perform check build
+        run: make docker-build
+  
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "1"
+      - name: Run tests
+        run: make test

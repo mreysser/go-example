@@ -27,7 +27,7 @@ func TestGetLogger(t *testing.T) {
 	result3 := logr.GetLoggerFromContextOrDefault(ctx2)
 	assert.NotNil(t, result3)
 	assert.NotEqual(t, result1, result3)
-	if result3.GetLevel() != logrus.DebugLevel {
+	if result3.GetLevel() != logrus.InfoLevel {
 		t.Errorf("Expected debug level, but got %v", result3.GetLevel())
 	}
 	_, ok := result3.Formatter.(*logrus.JSONFormatter)

@@ -103,7 +103,7 @@ func runServer(e *echo.Echo) {
 
 	err := e.StartServer(&s)
 	if err != nil && err != http.ErrServerClosed {
-		log.Errorf("server failed to start: %w", err)
+		log.Errorf("server failed to start: %s", err.Error())
 	}
 }
 
