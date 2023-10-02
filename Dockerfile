@@ -12,9 +12,9 @@ WORKDIR /usr/src/app
 
 COPY --from=BUILDER /usr/src/app/main .
 
-EXPOSE 9001
+EXPOSE 80
 
 HEALTHCHECK --timeout=2s --start-period=5s --retries=3 --interval=5s \
-    CMD curl --fail http://localhost:9001/live || exit 1
+    CMD curl --fail http://localhost:80/live || exit 1
 
 ENTRYPOINT [ "/usr/src/app/main" ]
