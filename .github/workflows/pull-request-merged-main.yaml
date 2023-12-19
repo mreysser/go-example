@@ -1,0 +1,44 @@
+name: Release after PR Merge to Main
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - test
+
+jobs:
+  check-build:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "1"
+      - name: Perform check build
+        run: make docker-build
+
+  tag-repo:
+    needs: check-build
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.bump-version.outputs.new-tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
+      - name: Bump version and push tag
+        id: bump-version
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCHES: main
+          WITH_V: true
+  
+  echo-result:
+    needs: tag-repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo the result
+        run: echo "blarg ${{ needs.tag-repo.outputs.output1 }}"
