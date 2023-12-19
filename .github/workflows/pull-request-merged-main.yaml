@@ -4,7 +4,7 @@ on:
     types:
       - closed
     branches:
-      - test
+      - main
 
 jobs:
   check-build:
@@ -22,7 +22,7 @@ jobs:
     needs: check-build
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.bump-version.outputs.new-tag }}
+      output1: ${{ steps.bump-version.outputs.new_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,4 +41,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo the result
-        run: echo "blarg ${{ needs.tag-repo.outputs.output1 }}"
+        run: 'echo "Testing output: ${{ needs.tag-repo.outputs.output1 }}"'
