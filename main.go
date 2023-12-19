@@ -98,7 +98,7 @@ func main() {
 
 func runServer(e *echo.Echo) {
 	s := http.Server{
-		Addr: ":9001",
+		Addr: ":80",
 	}
 
 	err := e.StartServer(&s)

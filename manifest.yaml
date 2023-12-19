@@ -18,5 +18,5 @@ spec:
       - name: go-example-test-registry
         image: k3d-registry.localhost:8000/go-example:latest
         ports:
-        - containerPort: 9001
+        - containerPort: 80
         
