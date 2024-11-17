@@ -83,6 +83,7 @@ func main() {
 
 	e.Use(middleware.Recover())
 
+	e.Static("/", "static")
 	e.GET("/api/", api.Hello)
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 	e.GET("/live", live)
