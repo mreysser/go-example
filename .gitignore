@@ -1,5 +1,6 @@
 # Binaries for programs and plugins
 main
+go-example
 *.exe
 *.exe~
 *.dll

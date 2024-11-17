@@ -7,12 +7,11 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/mreysser/go-example/handler"
+	"github.com/mreysser/go-example/api"
 	"github.com/mreysser/go-example/logger"
 	"github.com/mreysser/go-lifecycle"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -36,7 +35,7 @@ func init() {
 }
 
 func main() {
-	logrus.NewEntry(logr).Info("start")
+	log.NewEntry(logr).Info("start")
 	token := lifecycle.GetDefaultLifecycleToken()
 
 	e := echo.New()
@@ -84,7 +83,8 @@ func main() {
 
 	e.Use(middleware.Recover())
 
-	e.GET("/", handler.Hello)
+	e.Static("/", "static")
+	e.GET("/api/", api.Hello)
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 	e.GET("/live", live)
 	e.GET("/ready", ready)
